@@ -1,0 +1,148 @@
+{% extends 'Shop/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+    <style>
+        .product-body {
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .input-card-container, .product-list-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .input-card, .product-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            width: 100%;
+            max-width: 600px;
+            color: #333;
+            transition: transform 0.3s;
+        }
+        .input-card:hover, .product-card:hover {
+            transform: translateY(-10px);
+        }
+        h2 {
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-field, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .primary-btn, .danger-btn, .success-btn {
+            background-color: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .primary-btn:hover, .success-btn:hover {
+            background-color: #1e3a8a;
+        }
+        .danger-btn {
+            background-color: #ef4444;
+        }
+        .danger-btn:hover {
+            background-color: #dc2626;
+        }
+        .product-card img {
+            border-radius: 12px;
+            margin-bottom: 10px;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body class="product-body">
+    <div class="input-card-container">
+        <div class="input-card">
+            <h2>Submit Product</h2>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label>Name</label>
+                <input type="text" name="txtname" class="input-field" placeholder="Enter the Name" required>
+                <label>Price</label>
+                <input type="text" name="txtprice" class="input-field" placeholder="Enter the Price" required>
+                <label>Category</label>
+                <select name="Category" id="Category" class="input-field">
+                    <option value="sel">--select--</option>
+                    {% for i in category %}
+                    <option value="{{i.id}}">{{i.category_name}}</option>
+                    {% endfor %}
+                </select>
+                <label>SubCategory</label>
+                <select name="SubCategory" id="SubCategory" class="input-field">
+                    <option value="">--select--</option>
+                </select>
+                <label>Details</label>
+                <textarea name="txtDetails" class="input-field" placeholder="Enter the Details" rows="4" required></textarea>
+                <label>Photo</label>
+                <input type="file" name="txtphoto" class="input-field" required>
+                <input type="submit" name="btnsubmit" class="primary-btn" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <h2>Product List</h2>
+    <div class="product-list-container">
+        {% for i in product %}
+        <div class="product-card">
+            <h3>{{i.product_name}}</h3>
+            <img src="{{i.product_photo.url}}" alt="Product Image">
+            <p><strong>Details:</strong> {{i.product_details}}</p>
+            <p><strong>Price:</strong> ₹{{i.product_price}}</p>
+            <p><strong>Category:</strong> {{i.subcategory.category.category_name}}</p>
+            <p><strong>Subcategory:</strong> {{i.subcategory.subcategory_name}}</p>
+            <a href="{% url 'Shop:delproduct' i.id %}" class="danger-btn">Delete</a>
+            <a href="{% url 'Shop:stock' i.id %}" class="success-btn">Add Stock</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $("#Category").change(function () {
+            var cid = $(this).val();
+            var ur = "{% url 'Shop:ajaxsub' %}"
+            $.ajax({
+                url: ur,
+                data: { cid: cid },
+                success: function (data) {
+                    $("#SubCategory").html(data);
+                },
+            });
+        });
+    </script>
+</body>
+
+</html>
+{% endblock %}

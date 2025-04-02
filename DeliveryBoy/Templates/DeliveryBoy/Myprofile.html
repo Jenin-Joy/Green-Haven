@@ -1,0 +1,102 @@
+{% extends 'DeliveryBoy/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        .profile-body {
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .profile-card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .profile-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            width: 100%;
+            max-width: 600px;
+            color: #333;
+            transition: transform 0.3s;
+        }
+        .profile-card:hover {
+            transform: translateY(-10px);
+        }
+        h2 {
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile-img-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .profile-img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .primary-btn, .info-btn {
+            background-color: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .primary-btn:hover {
+            background-color: #1e3a8a;
+        }
+        .info-btn {
+            background-color: #0ea5e9;
+        }
+        .info-btn:hover {
+            background-color: #0284c7;
+        }
+    </style>
+</head>
+
+<body class="profile-body">
+    <div class="profile-card-container">
+        <div class="profile-card">
+            <h2>My Profile</h2>
+            <div class="profile-img-container">
+                <img src="{{delivery.delivery_photo.url}}" class="profile-img" alt="Profile Picture">
+            </div>
+            <p><strong>Name:</strong> {{delivery.delivery_name}}</p>
+            <p><strong>Email:</strong> {{delivery.delivery_email}}</p>
+            <p><strong>Contact:</strong>{{delivery.delivery_contact}}</p>
+            <p><strong>Address:</strong>{{delivery.delivery_address}}</p>
+            <p><strong>District:</strong> {{delivery.place.district.district_name}}</p>
+            <p><strong>Place:</strong>{{delivery.place.place_name}}</p>
+            <div style="text-align: center;">
+                <a href="{% url 'DeliveryBoy:editprofile'%}" class="primary-btn">Edit Profile</a>
+                <a href="{% url 'DeliveryBoy:changepassword'%}" class="info-btn">Change Password</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

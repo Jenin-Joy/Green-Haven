@@ -1,0 +1,173 @@
+{% extends 'User/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .container-page {
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .category-select {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 12px;
+            border-radius: 25px;
+            border: 2px solid #1e40af;
+            background-color: #fff;
+            font-size: 16px;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        select:hover {
+            background-color: #f0f5ff;
+        }
+
+        select:focus {
+            border-color: #1e3a8a;
+            box-shadow: 0 0 8px rgba(30, 58, 138, 0.5);
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .item-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            width: 100%;
+            max-width: 300px;
+            color: #333;
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .item-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .item-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .item-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #1e40af;
+        }
+
+        .item-price, .item-status {
+            font-size: 1rem;
+            margin: 8px 0;
+        }
+
+        .status-unavailable { color: #ef4444; }
+        .btn-main { background-color: #1e40af; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; }
+        .btn-main:hover { background-color: #1e3a8a; }
+    </style>
+</head>
+
+<body class="container-page">
+    <h2 style="text-align:center; color:#1e40af;">View Products</h2>
+
+    <div class="category-select">
+        Category 
+        <select name="sel_category" id="sel_category" onchange="searchproduct()">
+            <option value="">--Select--</option>
+            {% for i in category %}
+            <option value="{{i.id}}">{{i.category_name}}</option>
+            {% endfor %}
+        </select>
+        Sub Category
+        <select name="sel_subcategory" id="sel_subcategory" onchange="searchproduct()">
+            <option value="">--Select--</option>
+        </select>
+    </div>
+
+    <div class="card-container" id="result">
+        {% for i,j in product %}
+        <div class="item-card">
+            <div class="item-title">{{i.product_name}}</div>
+            <img class="item-img" src="{{i.product_photo.url}}" alt="{{i.product_name}}">
+            <div class="item-price">Price: ${{i.product_price}}</div>
+            <div>
+                {% for k in ar %}
+                    {% if k <= j %}
+                        <i class="fa-solid fa-star text-warning"></i>
+                    {% else %}
+                        <i class="fa-solid fa-star star-light"></i>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+            <div>
+                {% if i.total_stock == 0 %}
+                    <span class="status-unavailable">Out Of Stock</span>
+                {% else %}
+                    <a href="{% url 'User:Addcart' i.id %}" class="btn-main">Add To Cart</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+        window.location = "{% url 'User:viewproduct' %}"
+    </script>
+    {% endif %}
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#sel_category").change(function () {
+        var cid = $(this).val();
+        var ur = "{% url 'Shop:ajaxsub' %}"
+        $.ajax({
+            url: ur,
+            data: { cid: cid },
+            success: function (data) {
+                $("#sel_subcategory").html(data);
+            },
+        });
+    });
+
+    function searchproduct() {
+        var cid = document.getElementById("sel_category").value;
+        var sid = document.getElementById("sel_subcategory").value;
+        var ur = "{% url 'User:ajaxsearchproduct' %}";
+        $.ajax({
+            url: ur,
+            data: { cid: cid, sid: sid },
+            success: function (data) {
+                $("#result").html(data);
+            },
+        });
+    }
+</script>
+{% endblock %}

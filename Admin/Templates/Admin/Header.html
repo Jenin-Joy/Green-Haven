@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Dashboard</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'Admin/assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'Admin/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'Admin/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'Admin/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'Admin/assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'Admin/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'Admin/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'Admin/assets/css/main.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: iPortfolio
+  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
+  * Updated: Jun 29 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <div class="profile-img">
+      <img src="{% static 'Admin/assets/img/my-profile-img.jpg' %}" alt="" class="img-fluid rounded-circle">
+    </div>
+
+    <a href="{% url 'Admin:adminhome' %}" class="logo d-flex align-items-center justify-content-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1 class="sitename">Alex Smith</h1>
+    </a>
+
+    <!-- <div class="social-links text-center">
+      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
+      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div> -->
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="{% url 'Admin:adminhome' %}" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a href="{% url 'Admin:verification' %}"><i class="fa-solid fa-users" >&nbsp; &nbsp;</i> User Verifications</a></li>
+        <li><a href="{% url 'Admin:newdesigner' %}"><i class="fa-solid fa-pen">&nbsp; &nbsp;</i> Designer Verification</a></li>
+        <li><a href="{% url 'Admin:accepteddesigner' %}"><i class="fa-solid fa-clipboard-check"></i>&nbsp; &nbsp;</i> Accepted Designers</a></li>
+        <li><a href="{% url 'Admin:rejecteddesigner' %}"><i class="fa-solid fa-circle-xmark"></i>&nbsp; &nbsp;</i> Rejected  Designers</a></li>
+
+
+        <li><a href="{% url 'Admin:newshops' %}"><i class="fa-solid fa-shop"></i>&nbsp; &nbsp;</i> New Shops</a></li>
+        <li><a href="{% url 'Admin:acceptedshops' %}"><i class="fa-solid fa-circle-check"></i>&nbsp; &nbsp;</i>Accepted Shops</a></li>
+        <li><a href="{% url 'Admin:rejectedshop' %}"><i class="fa-solid fa-rectangle-xmark"></i>&nbsp; &nbsp;</i>Rejected Shops</a></li>
+        <li><a href="{% url 'Admin:deliveryboy' %}"><i class="fa-solid fa-shop"></i>&nbsp; &nbsp;</i> DeliveryBoy</a></li>
+        <li><a href="{% url 'Admin:accepteddelivery' %}"><i class="fa-solid fa-circle-check"></i>&nbsp; &nbsp;</i>Accepted DeliveryBoy</a></li>
+        <li><a href="{% url 'Admin:rejecteddelivery' %}"><i class="fa-solid fa-circle-check"></i>&nbsp; &nbsp;</i>Rejected DeliveryBoy</a></li>
+
+
+
+         <li><a href="{% url 'Admin:viewcomplaints' %}"><i class="fa-solid fa-comment"></i>&nbsp; &nbsp;</i> Complaints</a></li>
+        <li><a href="{% url 'Admin:replayedcomplaint' %}"><i class="fa-solid fa-reply"></i>&nbsp; &nbsp;</i> Replyed Complaints</a></li>
+        <li><a href="{% url 'Admin:feedback' %}"><i class="fa-solid fa-message"></i>&nbsp; &nbsp;</i> Feedback</a></li>
+        <li><a href="{% url 'Admin:category' %}"><i class="fa-solid fa-message"></i>&nbsp; &nbsp;</i> category</a></li>
+        <li><a href="{% url 'Admin:subcategory' %}"><i class="fa-solid fa-message"></i>&nbsp; &nbsp;</i> subcategory</a></li>
+        <li><a href="{% url 'Admin:logout' %}"> Logout</a></li>
+
+
+        
+
+        
+        <!-- <li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="#">Dropdown 1</a></li>
+            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="#">Deep Dropdown 1</a></li>
+                <li><a href="#">Deep Dropdown 2</a></li>
+                <li><a href="#">Deep Dropdown 3</a></li>
+                <li><a href="#">Deep Dropdown 4</a></li>
+                <li><a href="#">Deep Dropdown 5</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Dropdown 2</a></li>
+            <li><a href="#">Dropdown 3</a></li>
+            <li><a href="#">Dropdown 4</a></li>
+          </ul>
+        </li>
+        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+      </ul> -->
+    </nav>
+
+  </header>
+  <main class="main">
+  <!-- <section id="hero" class="hero section dark-background">
+
+    <img src="{% static 'Admin/assets/img/hero-bg.jpg' %}" alt="" data-aos="fade-in" class="">
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <h2>Alex Smith</h2>
+      <p>I'm <span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer">Designer</span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+    </div>
+
+  </section> -->
+  {% block content %}
+  {% endblock%}
+  <footer id="footer" class="footer position-relative light-background">
+
+    <div class="container">
+      <div class="copyright text-center ">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>
+      </div>
+    </div>
+
+  </footer>
+  

@@ -1,0 +1,241 @@
+{% extends 'Admin/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejected Designers</title>
+    <style>
+        /* Card Style CSS */
+        .designer-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            transition: transform 0.3s ease;
+        }
+
+        .designer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Circular Image for Designer Photo */
+        .designer-card img {
+            width: 150px;  /* Set a fixed width */
+            height: 150px; /* Set a fixed height */
+            border-radius: 50%;  /* This makes the image circular */
+            object-fit: cover;  /* Ensures the image is not distorted */
+            margin-bottom: 15px;  /* Adds some spacing between image and content */
+            transition: transform 0.3s ease; /* Smooth transition for scaling */
+            cursor: pointer;
+        }
+
+        /* Hover effect to scale the image */
+        .designer-card img:hover {
+            transform: scale(1.2); /* Scale the image to 120% of its size */
+        }
+
+        .designer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .designer-info p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .designer-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            width: 100%;  /* Make button width the same as the card */
+            padding: 15px;
+            background-color: #24ed24;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;  /* Ensures padding is included in the width */
+        }
+
+        .btn:hover {
+            background-color: #0dec4c;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hide Proof Image initially */
+        .proof-image {
+            display: none;
+            margin-top: 10px;
+            text-align: center;  /* Center the proof image */
+        }
+
+        /* Circular Image for Proof */
+        .proof-image img {
+            width: 150px;  /* Set a fixed width */
+            height: 150px; /* Set a fixed height */
+            border-radius: 50%;  /* This makes the proof image circular */
+            object-fit: cover;  /* Ensures the image is not distorted */
+            transition: transform 0.3s ease; /* Smooth transition for scaling */
+            cursor: pointer;
+        }
+
+        /* Hover effect to scale the proof image */
+        .proof-image img:hover {
+            transform: scale(1.2); /* Scale the image to 120% of its size */
+        }
+
+        /* Custom Style for the toggle button */
+        .proof-toggle-btn {
+            padding: 8px 20px;
+            font-size: 16px;
+            background-color: #17a2b8; /* Light Blue */
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .proof-toggle-btn:hover {
+            background-color: #138496; /* Darker Blue */
+            transform: scale(1.05);
+        }
+
+        .proof-toggle-btn:focus {
+            outline: none;
+        }
+
+        /* Modal for enlarging the image */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            overflow: auto;
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        /* Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Rejected Designers</h2>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                {% for i in designer %}
+                <div class="col-md-4">
+                    <div class="designer-card">
+                        <!-- Circular Image for Designer Photo -->
+                        <img src="{{ i.designer_photo.url }}" alt="Designer Photo">
+                        
+                        <div class="designer-info">
+                            <p><strong>Name:</strong> {{ i.designer_name }}</p>
+                            <p><strong>Email:</strong> {{ i.designer_email }}</p>
+                            <p><strong>Contact:</strong> {{ i.designer_contact }}</p>
+                            <p><strong>Address:</strong> {{ i.designer_address }}</p>
+                            <p><strong>District:</strong> {{ i.place.district.district_name }}</p>
+                            <p><strong>Place:</strong> {{ i.place.place_name }}</p>
+                        </div>
+
+                        <div class="designer-images">
+                            <button type="button" class="proof-toggle-btn" id="btn-{{ i.id }}" onclick="toggleProofImage({{ i.id }})">Show Proof</button>
+                            <div class="proof-image" id="proof-{{ i.id }}">
+                                <!-- Circular Proof Image -->
+                                <img src="{{ i.designer_proof.url }}" alt="Designer Proof" onclick="openModal('{{ i.designer_proof.url }}')">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal for Enlarged Image -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Function to toggle the proof image visibility
+        function toggleProofImage(id) {
+            var proofImage = document.getElementById("proof-" + id);
+            var button = document.getElementById("btn-" + id); // Use button ID to change button text
+
+            // Toggle visibility of the proof image and change button text
+            if (proofImage.style.display === "none" || proofImage.style.display === "") {
+                proofImage.style.display = "block";
+                button.textContent = "Hide Proof";  // Change button text to 'Hide Proof'
+            } else {
+                proofImage.style.display = "none";
+                button.textContent = "Show Proof";  // Change button text back to 'Show Proof'
+            }
+        }
+
+        // Open the modal with the image
+        function openModal(imageSrc) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("modalImage");
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+        }
+
+        // Close the modal
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
+{% endblock %}

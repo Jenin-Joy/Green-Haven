@@ -1,0 +1,405 @@
+
+    
+
+
+      {% load static %}
+      <!doctype html>
+      <html class="no-js" lang="zxx">
+      
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>GreenHaven</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="{% static 'Main/site.webmanifest' %}">
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'Main/assets/img/favicon.ico' %}">
+      
+        <!-- CSS here -->
+        <link rel="stylesheet" href="{% static 'Main/assets/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/slicknav.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/flaticon.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/magnific-popup.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/fontawesome-all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/themify-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/slick.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/nice-select.css' %}">
+        <link rel="stylesheet" href="{% static 'Main/assets/css/style.css' %}">
+      </head>
+      
+      <body class="body-bg">
+        <!--? Preloader Start -->
+        <div id="preloader-active">
+          <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+              <div class="preloader-circle"></div>
+              <div class="preloader-img pere-text">
+                <img src="{% static 'Main/assets/img/logo/loder.jpg' %}" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <style>
+          /* From Uiverse.io by Lealdos */
+          .Btnn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition-duration: 0.3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background-color:white;
+          }
+      
+          /* plus sign */
+          .sign {
+            width: 100%;
+            transition-duration: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+      
+          .sign svg {
+            width: 18px;
+          }
+      
+          .sign svg path {
+            fill: black;
+          }
+      
+          /* text */
+          .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: black;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition-duration: 0.3s;
+          }
+      
+          /* hover effect on button width */
+          .Btnn:hover {
+            width: 125px;
+            border-radius: 40px;
+            transition-duration: 0.3s;
+          }
+      
+          .Btnn:hover .sign {
+            width: 30%;
+            transition-duration: 0.3s;
+            padding-left: 20px;
+          }
+      
+          /* hover effect button's text */
+          .Btnn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: 0.3s;
+            padding-right: 10px;
+          }
+      
+          /* button click effect*/
+          .Btnn:active {
+            transform: translate(2px, 2px);
+          }
+        </style>
+        <header>
+          <!-- Header Start -->
+          <div class="header-area header-transparent">
+            <div class="main-header header-sticky">
+              <div class="container-fluid">
+                <div class="menu-wrapper d-flex align-items-center justify-content-between">
+                  <!-- Logo -->
+                  <div class="logo">
+                    <a href="{% url 'Guest:index' %}"><img src="{% static 'Main/assets/img/logo/logo.png' %}" alt=""></a>
+                  </div>
+                  <!-- Main-menu -->
+                  <div class="main-menu f-right d-none d-lg-block">
+                    <nav>
+                      <ul id="navigation">
+                        <li><a href="{% url 'Designer:dhomepage' %}">Home</a></li>
+                        <li><a href="{% url 'Designer:dprofile' %}">Profile</a></li>
+                        <li><a>MESSAGE</a>
+                          <ul class="submenu">
+                            <li><a href=" {% url 'Designer:complaint' %}">Complaint</a></li>
+                          
+                          </ul>
+      
+                        <li><a>OTHERS</a>
+                          <ul class="submenu">
+                            <li><a href=" {% url 'Designer:addwork' %}">Work</a></li>
+                            
+                            <li><a href="{% url 'Designer:viewrequest' %}">View Request</a></li>
+                
+                          </ul>
+                        </li>
+                        <li><a href="{% url 'Designer:logout' %}">
+                            <button class="Btnn">
+                              <div class="sign">
+                                <svg viewBox="0 0 512 512">
+                                  <path
+                                    d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                                  </path>
+                                </svg>
+                              </div>
+      
+                              <div class="text">Logout</div>
+                            </button>
+                          </a></li>
+      
+      
+      
+                      </ul>
+                    </nav>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Header End -->
+        </header>
+        <main>
+          <!--? slider Area Start-->
+          <div class="slider-area">
+      
+            <div class="slider-active dot-style">
+              <!-- Single Slider -->
+              <div class="single-slider slider-height hero-overly d-flex align-items-center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6">
+                      <div class="hero__caption">
+                        <span data-animation="fadeInLeft" data-delay=".4s">Welcome to GreenHaven</span>
+                        <h1 data-animation="fadeInLeft" data-delay=".6s">Modern Interior & Design</h1>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <!-- slider Area End-->
+          <!--? our info Start -->
+          <div class="our-info-area pt-170 pb-100 section-bg"
+            data-background="{% static 'Main/assets/img/gallery/section_bg02.jpg' %}">
+            <div class="container">
+              <div class="row justify-content-between">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                  <div class="single-info mb-60">
+                    <div class="info-caption">
+                      <h4>Clean and Services</h4>
+                      <p>For each project we establish relationships with partners who we know will help us. </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                  <div class="single-info mb-60">
+                    <div class="info-caption">
+                      <h4>Clean and Modern</h4>
+                      <p>For each project we establish relationships with partners who we know will help us. </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                  <div class="single-info mb-60">
+                    <div class="info-caption">
+                      <h4>Clean and Modern</h4>
+                      <p>For each project we establish relationships with partners who we know will help us. </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- our info End -->
+          <!--? Services Ara Start -->
+          <div class="services-area section-padding3">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="cl-xl-7 col-lg-8 col-md-10">
+                  <!-- Section Tittle -->
+                  <div class="section-tittle text-center mb-70">
+                    <span>Our Professional Services</span>
+                    <h2>Best Interitor Services</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-10">
+                  <div class="single-services mb-200">
+                    <div class="services-img">
+                      <img src="{% static 'Main/assets/img/gallery/services1.png' %}" alt="">
+                    </div>
+                    <div class="services-caption">
+                      <h3><a href="{% static 'Main/services.html' %}">Lighting</a></h3>
+                      <p class="pera1">For each project we establish </p>
+                      <p class="pera2">For each project we establish relationships with partners who we know will help us.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-10">
+                  <div class="single-services mb-200">
+                    <div class="services-img">
+                      <img src="{% static 'Main/assets/img/gallery/services2.png' %}" alt="">
+                    </div>
+                    <div class="services-caption">
+                      <h3><a href="{% static 'Main/services.html' %}">Interior Design</a></h3>
+                      <p class="pera1">For each project we establish </p>
+                      <p class="pera2">For each project we establish relationships with partners who we know will help us.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-10">
+                  <div class="single-services mb-200">
+                    <div class="services-img">
+                      <img src="{% static 'Main/assets/img/gallery/services3.png' %}" alt="">
+                    </div>
+                    <div class="services-caption">
+                      <h3><a href="{% static 'Main/services.html' %}">Office Decoretion</a></h3>
+                      <p class="pera1">For each project we establish </p>
+                      <p class="pera2">For each project we establish relationships with partners who we know will help us.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Services Ara End -->
+      
+      
+        </main>
+        <footer>
+          <!--? Footer Start-->
+          <div class="footer-area footer-bg">
+            <div class="container">
+              <div class="footer-top footer-padding">
+                <div class="row d-flex justify-content-between">
+                  <div class="col-xl-3 col-lg-4 col-md-5 col-sm-8">
+                    <div class="single-footer-caption mb-50">
+                      <!-- logo -->
+                      <div class="footer-logo">
+                        <a href="{% url 'Guest:index' %}"><img src="{% static 'Main/assets/img/logo/logo2_footer.png' %}"
+                            alt=""></a>
+                      </div>
+                      <div class="footer-tittle">
+                        <div class="footer-pera">
+                          <p class="info1">Grabbing the concsumer’s attention isn’t enough you have to keep that attention for
+                            at least a.</p>
+                        </div>
+                      </div>
+                      <div class="footer-number">
+                        <h4><span>+91 </span>9645279957</h4>
+                        <p>greenhaven567@gmail.com</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-2 col-md-5 col-sm-6">
+                    <div class="single-footer-caption mb-50">
+                      <div class="footer-tittle">
+                        <h4>Useful Links</h4>
+                      </div>
+                      <div class="footer-cap">
+                        <span>New York</span>
+                        <p>123 East 26th Street, Fifth Floor, New York, NY 10011</p>
+                      </div>
+                      <div class="footer-cap">
+                        <span>Japan</span>
+                        <p>123 East 26th Street, Fifth Floor, New York, NY 10011</p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Instagram -->
+                  <div class="col-xl-4 col-lg-4 col-md-5 col-sm-7">
+                    <div class="single-footer-caption mb-50">
+                      <div class="footer-tittle">
+                        <h4>Instagram Feed</h4>
+                      </div>
+                      <div class="instagram-gellay">
+                        <ul class="insta-feed">
+                          <li><img src="{% static 'Main/assets/img/gallery/instagram1.png' %}" alt=""></a></li>
+                          <li><img src="{% static 'Main/assets/img/gallery/instagram2.png' %}" alt=""></a></li>
+                          <li><img src="{% static 'Main/assets/img/gallery/instagram3.png' %}" alt=""></a></li>
+                          <li><img src="{% static 'Main/assets/img/gallery/instagram4.png' %}" alt=""></a></li>
+                          <li><img src="{% static 'Main/assets/img/gallery/instagram5.png' %}" alt=""></a></li>
+                          <li><img src="{% static 'Main/assets/img/gallery/instagram6.png' %}" alt=""></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="footer-bottom">
+                <div class="row d-flex justify-content-between align-items-center">
+                  <div class="col-xl-9 col-lg-8">
+                    <div class="footer-copy-right">
+                      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                      <p>&copy; 2025 GreenHaven. All rights reserved.</p>
+      
+                      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Footer End-->
+        </footer>
+        <!-- Scroll Up -->
+        <div id="back-top">
+          <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+        </div>
+      
+        <!-- JS here -->
+        <!-- All JS Custom Plugins Link Here here -->
+        <script src="{% static 'Main/./assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+        <!-- Jquery, Popper, Bootstrap -->
+        <script src="{% static 'Main/./assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/popper.min.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/bootstrap.min.js' %}"></script>
+        <!-- Jquery Mobile Menu -->
+        <script src="{% static 'Main/./assets/js/jquery.slicknav.min.js' %}"></script>
+      
+        <!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="{% static 'Main/./assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/slick.min.js' %}"></script>
+        <!-- One Page, Animated-HeadLin -->
+        <script src="{% static 'Main/./assets/js/wow.min.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/animated.headline.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/jquery.magnific-popup.js' %}"></script>
+      
+        <!-- Nice-select, sticky -->
+        <!-- <script src="{% static 'Main/./assets/js/jquery.nice-select.min.js' %}"></script>
+          <script src="{% static 'Main/./assets/js/jquery.sticky.js' %}"></script>
+           -->
+        <!-- contact js -->
+        <script src="{% static 'Main/./assets/js/contact.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/jquery.form.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/mail-script.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/jquery.ajaxchimp.min.js' %}"></script>
+      
+        <!-- Jquery Plugins, main Jquery -->
+        <script src="{% static 'Main/./assets/js/plugins.js' %}"></script>
+        <script src="{% static 'Main/./assets/js/main.js' %}"></script>
+      
+      </body>
+      
+      </html>
+      

@@ -1,0 +1,109 @@
+{% extends 'Shop/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock</title>
+    <style>
+        .stock-body {
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .input-card-container, .stock-card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .input-card, .stock-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.3s;
+        }
+        .input-card:hover, .stock-card:hover {
+            transform: translateY(-10px);
+        }
+        h2 {
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h3 {
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .primary-btn, .danger-btn {
+            background-color: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .primary-btn:hover {
+            background-color: #1e3a8a;
+        }
+        .danger-btn {
+            background-color: #ef4444;
+        }
+        .danger-btn:hover {
+            background-color: #dc2626;
+        }
+    </style>
+</head>
+<body class="stock-body">
+    <div class="input-card-container">
+        <div class="input-card">
+            <h2>Add Stock</h2>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <label>Stock</label>
+                <input type="number" name="stock" class="input-field" placeholder="Enter Stock Count" required>
+                <input type="submit" name="btnsubmit" class="primary-btn" value="Add">
+            </form>
+        </div>
+    </div>
+
+    <h2>Stock List</h2>
+    <div class="stock-card-container">
+        {% for i in stock %}
+        <div class="stock-card">
+            
+            <h3>{{ i.product.product_name }}</h3>
+            <p><strong>Stock:</strong> {{ i.stock_count }}</p>
+            <p><strong>Date:</strong> {{ i.stock_date }}</p>
+            <a href="{% url 'Shop:delstocks' i.id %}" class="danger-btn">Delete</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}
+
+

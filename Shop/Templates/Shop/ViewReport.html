@@ -1,0 +1,89 @@
+{% extends 'Shop/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <style>
+        .report-body {
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .report-container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin: auto; /* Centering the card horizontally */
+        }
+        h1 {
+            color: #1e40af;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            color: #333;
+        }
+    </style>
+</head>
+<body class="report-body">
+    <div class="report-container">
+        <h1>Generate Report</h1>
+        <table>
+            <tr>
+                <td><label for="fdate">From Date</label></td>
+                <td><input type="date" name="fdate" id="fdate" onchange="getReport()"></td>
+            </tr>
+            <tr>
+                <td><label for="tdate">To Date</label></td>
+                <td><input type="date" name="tdate" id="tdate" onchange="getReport()"></td>
+            </tr>
+        </table>
+        <div id="result">Report data will appear here...</div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function getReport() {
+            var fdate = document.getElementById("fdate").value;
+            var tdate = document.getElementById("tdate").value;
+            var ur = "{% url 'Shop:ajaxreport' %}";
+            $.ajax({
+                url: ur,
+                data: { fdate: fdate, tdate: tdate },
+                success: function (data) {
+                    $("#result").html(data);
+                },
+            });
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

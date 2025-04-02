@@ -1,0 +1,127 @@
+{% extends 'User/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .page-container {
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .card-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            width: 100%;
+            max-width: 300px;
+            color: #333;
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #1e40af;
+        }
+
+        .product-amount, .product-date {
+            font-size: 1rem;
+            margin: 8px 0;
+        }
+
+        .product-action span {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .status-pending { color: #ef4444; }
+        .status-completed { color: #10b981; }
+        .status-order-completed { color: #1e40af; }
+
+        .product-action a {
+            color: #1e40af;
+            text-decoration: none;
+            margin: 5px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .product-action a:hover {
+            color: #1e3a8a;
+        }
+    </style>
+</head>
+
+<body class="page-container">
+    <h2 style="text-align:center; color:#1e40af;">Your Cart</h2>
+
+    <div class="card-wrapper">
+        {% for i in cart %}
+        <div class="product-card">
+            <div class="product-title">{{ i.product.product_name }}</div>
+            <img class="product-img" src="{{ i.product.product_photo.url }}" alt="{{ i.product.product_name }}">
+            <div class="product-amount">Amount: ${{ i.booking.booking_amount }}</div>
+            <div class="product-date">Date: {{ i.booking.booking_date }}</div>
+
+            <div class="product-action">
+                {% if i.booking.booking_status == 1 and i.cart_status == 1 %}
+                    <span class="status-pending">Payment Pending..</span>
+                    <a href="{% url 'User:payment' i.booking.id %}">Pay</a>
+                {% elif i.booking.booking_status == 2 and i.cart_status == 2 %}
+                    <span class="status-completed">Payment Completed..</span>
+                    <a href="{% url 'User:bill' i.id %}">Bill</a>
+                    <a href="{% url 'User:chatpage' i.product.shop.id %}">Chat</a>
+                {% elif i.booking.booking_status == 2 and i.cart_status == 3 %}
+                    <span>Order Packed</span>
+                    <a href="{% url 'User:bill' i.id %}">Bill</a>
+                {% elif i.booking.booking_status == 2 and i.cart_status == 4 %}
+                    <span>Order Shipped</span>
+                    <a href="{% url 'User:bill' i.id %}">Bill</a>
+                {% elif i.booking.booking_status == 2 and i.cart_status == 5 %}
+                    <span>Order Collected</span>
+                    <a href="{% url 'User:bill' i.id %}">Bill</a>
+                {% elif i.booking.booking_status == 2 and i.cart_status == 6 %}
+                    <span class="status-order-completed">Order Delivered</span>
+                    <a href="{% url 'User:rating' i.product.id %}">Rating</a>
+                    <a href="{% url 'User:bill' i.id %}">Bill</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
+{% endblock %}

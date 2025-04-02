@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product </title>
+</head>
+
+<body>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <center>
+            <table border="2">
+                <h2>PRODUCTS</h2>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" name="txtname" placeholder="Enter the Name"></td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td><input type="text" name="txtprice" placeholder="Enter the Price" required></td>
+                </tr>
+                <tr>
+                <td>Category</td>
+                <td>
+                    <select name="Category"  id="Category">
+                        <option value="sel">--select--</option>
+                        {% for i in category %}
+            <option value="{{i.id}}">{{i.category_name}}</option>
+            {% endfor %}
+                    </select>
+                </tr>
+                <tr>
+                <td>SubCategory</td>
+                <td>
+                    <select name="SubCategory" id="SubCategory">
+                        <option value="">--select--</option>
+                    </select>
+                </tr>
+                <tr>
+                <td>Details</td>
+                <td>
+                    <textarea name="txtDetails" placeholder="Enter the Details" rows="2" cols="16" required></textarea>
+                </td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="txtphoto" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" name="btnsubmit" value="submit">
+                    </td>
+                </tr>
+            </table>
+            <table border="3">
+                <tr>
+                    <td>Name</td>
+                    <td>price</td>
+                    <td>category</td>
+                    <td>SubCategory</td>
+                    <td>Details</td>
+                    <td>Photo</td>
+                
+                </tr>
+            </table>
+                    
+        </center>
+    </form>
+
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#Category").change(function () {
+        var cid = $(this).val();
+        var ur = "{% url 'Admin:ajaxsub' %}"
+        $.ajax({
+            url: ur,
+            data: { cid: cid, },
+            success: function (data) {
+                $("#SubCategory").html(data);
+            },
+        });
+    });
+</script>
